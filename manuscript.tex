@@ -1,0 +1,48 @@
+% An uncapacitated facility location problem example
+% see https://en.wikipedia.org/wiki/Facility_location_problem for detail of this kind of problems.
+
+\documentclass{elsarticle}
+
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{enumerate}[(1)] \label{MODEL: sets}
+\item {\(F\)} - {\(i \in F\)} {facilities}, facility set.
+% num: 10
+\item {\(C\)} - {\(j \in C\)} {customers}, customer set.
+% num: 500
+\end{enumerate}
+
+\begin{enumerate}[(1)] \label{MODEL: parameters}
+\item {\(f_i\)} - {\(i \in F\)} {opening cost}, facility opening cost.
+% range: (100, 100)
+\item {\(c_{ij}\)} - {\(i \in F, j \in D\)} {transportation cost}, the cost for transport item from facilities to customers.
+% range: (1, 1)
+\item {\(d_j\)} - {\(j \in C\)} {demand}, demand of customers.
+% range: (10, 10)
+\end{enumerate}
+
+\begin{enumerate}[(1)] \label{MODEL: decisions}
+\item {\(x_i\)} - {\(i \in F\)} {location decision}, whether a facility will be open.
+% bin: True
+\item {\(z_{ij}\)} - {\(i \in F, j \in D\)} {assignment}, assign customers to facilities.
+% bin: True
+\end{enumerate}
+
+\begin{align}
+\textbf{min~}
+    \label{MODEL: OBJ - minimize}
+        & \sum_{i \in F} \sum_{j \in C} c_{ij} d_j z_{ij} + \sum_{i \in F} f_i x_i \\  
+\textbf{subject to~}
+    \label{MODEL: CONS - link location and storage}
+        & \sum_{i \in C} z_{ij} = 1, & \forall j \in F \\
+    \label{}
+        & \sum_{j \in F} z_{ij} \leq M x_i, & \forall i \in C \\
+    \label{}
+        & z_{ij} \in \{0, 1\}, & \forall i \in C, j \in F \\
+    \label{}
+        & x_i \in \{0, 1\}, & \forall i \in C
+\end{align}
+
+\end{document}
